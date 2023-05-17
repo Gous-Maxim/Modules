@@ -5,7 +5,7 @@
 # meta developer: @its_xuxanneynl
 # scope: hikka_only
 # ---------------------------------------------------------------------------------
-from telethon.tl.types import Message, PeerUser
+from telethon.tl.types import Message
 from .. import loader, utils
 
 
@@ -22,18 +22,18 @@ class AnimePhoto(loader.Module):
     @loader.command()
     async def pta(self, message: Message):
         """Обрабатываем картинки с помощью @qq_neural_anime_bot"""
-        await message.edit(f"Обрабатываю✨")
         reply_msg = await message.get_reply_message()
         if not reply_msg or not reply_msg.photo:
             await message.respond("Ответ на фото не найден!")
             return
+        await message.edit(f"Обрабатываю✨")
 
         chat_bot = 5894660331
-        entitys = PeerUser(chat_bot)
+
 
         try:
             photo = await reply_msg.download_media()
-            async with self.client.conversation(entitys) as conversation:
+            async with self.client.conversation(chat_bot) as conversation:
                 await conversation.send_file(file=photo)
 
                 response1 = await conversation.get_response()
