@@ -5,7 +5,7 @@
 # meta developer: @its_xuxanneynl
 # scope: hikka_only
 # ---------------------------------------------------------------------------------
-from telethon.tl.types import Message
+from telethon.tl.types import Message, PeerUser
 from .. import loader, utils
 
 
@@ -29,10 +29,11 @@ class AnimePhoto(loader.Module):
             return
 
         chat_bot = 5894660331
+        entitys = PeerUser(chat_bot)
 
         try:
             photo = await reply_msg.download_media()
-            async with self.client.conversation(chat_bot) as conversation:
+            async with self.client.conversation(entitys) as conversation:
                 await conversation.send_file(file=photo)
 
                 response1 = await conversation.get_response()
